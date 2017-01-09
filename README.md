@@ -76,6 +76,45 @@ Or install it yourself as:
 $ gem install social_media
 ```
 
+## Contributing
+
+So far, the following have been implemented:
+
+  * Twitter
+  * Facebook (WiP)
+  * Linkedin (WiP)
+  * Google+  (WiP)
+
+The following are planned:
+
+  Social Media Services:
+    * Yahoo
+    * Facebook
+    * Apple
+    * Yelp
+    * WhitePages
+    * Local.com
+    * Foursquare
+    
+  Directories:
+    * Google
+    * Bing
+    * MapQuest
+    * Superpages
+    * CitySearch
+    * MerchantCircle
+    * eLocal
+    * Topic
+    * YellowPageCity
+    * LocalStack
+    * ShowMeLocal
+    * EZLocal
+    * WhereTo?
+    * YellowMoxie
+    * CitySquares
+    * LocalDatabase
+    * Yellowise
+
 ## Statistics
 
   Facebook: 1,712,000,000 users
