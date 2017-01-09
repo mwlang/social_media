@@ -3,7 +3,7 @@ require 'spec_helper'
 RSpec.describe SocialMedia::Service::GooglePlus do
   context "class methods" do
     subject { described_class }
-    its(:name) { is_expected.to eq :linkedin }
+    its(:name) { is_expected.to eq :google_plus }
   end
 
   if service_configured? described_class.name
