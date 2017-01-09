@@ -27,7 +27,7 @@ module SocialMedia::Service
     private
 
     def client
-      @client ||= Koala::Facebook::API.new(connection_params[:access_token])
+      @client ||= Koala::Facebook::API.new(connection_params[:user_access_token])
     end
 
     def send_text_message message, options
