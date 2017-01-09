@@ -5,6 +5,16 @@ module SocialMedia
         raise NotImplementedError.new "#{self.to_s}::name not implemented"
       end
 
+      # :filenames - array of filenames that can be loaded and sent with text message
+      # :filename - a single filename that can be loaded and sent with text message
+      def send_message message, options={}
+        if options.has_key?(:filenames) || options.has_key?(:filename)
+          send_multipart_message message, options
+        else
+          send_text_message(message, options)
+        end
+      end
+
       attr_reader :connection_params
       attr_reader :not_provided_behavior
 
@@ -32,6 +42,17 @@ module SocialMedia
           raise wrapped_error
         end
       end
+
+      private
+
+      def send_text_message message, options
+        raise_not_provided_error
+      end
+
+      def send_multipart_message message, options
+        raise_not_provided_error
+      end
+
     end
   end
 end
