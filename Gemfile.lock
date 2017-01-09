@@ -3,7 +3,7 @@ PATH
   specs:
     social_media (0.0.3)
       google-api-client (~> 0.9)
-      koala (~> 2.2)
+      koala (~> 2.4)
       rails (~> 5.0.1)
       twitter (~> 6.0.0)
 
@@ -62,7 +62,7 @@ GEM
       unf (>= 0.0.5, < 1.0.0)
     equalizer (0.0.11)
     erubis (2.7.0)
-    faraday (0.10.0)
+    faraday (0.10.1)
       multipart-post (>= 1.2, < 3)
     ffi (1.9.14)
     formatador (0.2.5)
