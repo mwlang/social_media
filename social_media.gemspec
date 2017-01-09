@@ -18,6 +18,7 @@ Gem::Specification.new do |s|
   s.add_dependency "koala", "~> 2.4"
   s.add_dependency "google-api-client", "~> 0.9"
 
+  s.add_development_dependency "rake", "~> 10.5.0"
   s.add_development_dependency "rspec", "~> 3.5.0"
   s.add_development_dependency "rspec-its", "~> 1.2.0"
   s.add_development_dependency "simplecov"
