@@ -1,6 +1,8 @@
 require 'spec_helper'
 
 RSpec.describe SocialMedia::Service::Twitter do
+  include_context "shared_image_fixtures"
+
   context "class methods" do
     subject { described_class }
     its(:name) { is_expected.to eq :twitter }
@@ -41,13 +43,16 @@ RSpec.describe SocialMedia::Service::Twitter do
 
   describe "sending a message with images" do
     it "can send a message with one image" do
-      pending "not implemented"
-      expect(:pending).to eq :completed
+      with_cassette :twitter, :send_image do
+        expect(subject.send_message("Testing image upload", filename: chrome_image_path)).to eq 818276560667033600
+      end
     end
 
     it "can send a message with multiple images" do
-      pending "not implemented"
-      expect(:pending).to eq :completed
+      filenames = [chrome_image_path, firefox_image_path, ie_image_path]
+      with_cassette :twitter, :send_images do
+        expect(subject.send_message("Testing multiple image uploads", filenames: filenames)).to eq 818276563343077376
+      end
     end
   end
 
@@ -62,13 +67,13 @@ RSpec.describe SocialMedia::Service::Twitter do
   describe "Profile" do
     it "can upload a profile background image" do
       with_cassette :twitter, :upload_profile_background do
-        expect(subject.update_profile_background image_fixture_path(:wallpaper, :jpg)).to eq true
+        expect(subject.upload_profile_background wallpaper_image_path).to eq true
       end
     end
 
     it "can update a profile image" do
       with_cassette :twitter, :upload_profile_image do
-        expect(subject.update_profile_image image_fixture_path(:logo, :png)).to eq 806014044222189568
+        expect(subject.upload_profile_avatar chrome_image_path).to eq 806014044222189568
       end
     end
   end
