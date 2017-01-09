@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    social_media (0.0.1)
+    social_media (0.0.3)
       google-api-client (~> 0.9)
       koala (~> 2.2)
       rails (~> 5.0.1)

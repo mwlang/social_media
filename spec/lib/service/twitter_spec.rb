@@ -65,15 +65,48 @@ RSpec.describe SocialMedia::Service::Twitter do
   end
 
   describe "Profile" do
-    it "can upload a profile background image" do
-      with_cassette :twitter, :upload_profile_background do
-        expect(subject.upload_profile_background wallpaper_image_path).to eq true
+    it "can upload a profile cover image" do
+      with_cassette :twitter, :upload_profile_cover do
+        expect(subject.upload_profile_cover wallpaper_image_path).to eq true
       end
     end
 
-    it "can update a profile image" do
-      with_cassette :twitter, :upload_profile_image do
+    it "can remove a profile cover image" do
+      with_cassette :twitter, :remove_profile_cover do
+        expect(subject.remove_profile_cover).to eq true
+      end
+    end
+
+    it "can upload a profile avatar image" do
+      with_cassette :twitter, :upload_profile_avatar do
         expect(subject.upload_profile_avatar chrome_image_path).to eq 806014044222189568
+      end
+    end
+
+    it "can remove a profile avatar image" do
+      expect{subject.remove_profile_avatar}.to \
+        raise_error SocialMedia::Error::NotProvided, "SocialMedia::Service::Twitter#remove_profile_avatar"
+    end
+  end
+
+  describe "NotProvided behavior" do
+    let(:config) { service_configurations[described_class.name].merge!(not_provided_behavior: behavior) }
+    let(:service) { described_class.new config }
+
+    context ":raise_error" do
+      let(:behavior) { :raise_error }
+
+      it "raises an error" do
+        expect{subject.remove_profile_avatar}.to \
+          raise_error SocialMedia::Error::NotProvided, "SocialMedia::Service::Twitter#remove_profile_avatar"
+      end
+    end
+
+    context ":silent" do
+      let(:behavior) { :silent }
+
+      it "does not raise an error" do
+        expect{subject.remove_profile_avatar}.to_not raise_error
       end
     end
   end

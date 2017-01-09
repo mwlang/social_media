@@ -29,13 +29,21 @@ module SocialMedia::Service
       result.first.id
     end
 
-    def upload_profile_background filename
+    def upload_profile_cover filename
       client.update_profile_banner(open_file filename)
+    end
+
+    def remove_profile_cover
+      client.remove_profile_banner
     end
 
     def upload_profile_avatar filename
       result = client.update_profile_image(open_file filename)
       result.id
+    end
+
+    def remove_profile_avatar
+      raise_not_provided_error
     end
 
     private

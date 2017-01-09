@@ -1,5 +1,4 @@
 module SocialMedia
-
   def self.convert_exception_class exception, klass
     return exception if exception.is_a?(klass)
     e = klass.new("#{exception.class}: #{exception.message}")
@@ -16,4 +15,7 @@ module SocialMedia
 
   Unauthorized = Class.new(Error)
   Error::Unauthorized = Unauthorized
+
+  NotProvided = Class.new(Error)
+  Error::NotProvided = NotProvided
 end
