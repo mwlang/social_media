@@ -10,10 +10,6 @@ module SocialMedia::Service
       return ::SocialMedia::Error::Unauthorized if error.is_a? ::Twitter::Error::Unauthorized
     end
 
-    def reset_client
-      @client = nil
-    end
-
     def client
       @client ||= ::Twitter::REST::Client.new do |config|
         config.consumer_key = connection_params[:consumer_key]
