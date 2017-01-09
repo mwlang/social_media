@@ -13,7 +13,7 @@ RSpec.describe SocialMedia::Service::Facebook do
     it "instantiates" do
       expect(subject).to be_a SocialMedia::Service::Facebook
     end
-    its(:app_key)     { is_expected.to_not be nil }
-    its(:app_secret)  { is_expected.to_not be nil }
+    its(:connection_params) { is_expected.to include :app_key }
+    its(:connection_params) { is_expected.to include :app_secret }
   end
 end
