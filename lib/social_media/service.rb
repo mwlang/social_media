@@ -2,6 +2,8 @@ require_relative 'service/base'
 require_relative 'service/facebook'
 require_relative 'service/twitter'
 require_relative 'service/linkedin'
+require_relative 'service/google_plus'
+require_relative 'service/instagram'
 
 module SocialMedia::Service
   def self.service_classes

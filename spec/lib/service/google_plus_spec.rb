@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-RSpec.describe SocialMedia::Service::Linkedin do
+RSpec.describe SocialMedia::Service::GooglePlus do
   context "class methods" do
     subject { described_class }
     its(:name) { is_expected.to eq :linkedin }
@@ -11,7 +11,7 @@ RSpec.describe SocialMedia::Service::Linkedin do
     subject { service }
 
     it "instantiates" do
-      expect(subject).to be_a SocialMedia::Service::Linkedin
+      expect(subject).to be_a SocialMedia::Service::GooglePlus
     end
     its(:connection_params) { is_expected.to include :app_key }
     its(:connection_params) { is_expected.to include :app_secret }
@@ -21,7 +21,7 @@ RSpec.describe SocialMedia::Service::Linkedin do
       before { service.connection_params[:user_access_token] = 'bogus' }
       subject { service }
 
-      it "wraps the LinkedIn specific error" do
+      it "wraps the google+ specific error" do
         with_cassette :linkedin, :invalid_token do
           expect{subject.send_message("This is a test")}.to raise_error SocialMedia::Error, "TODO: fix"
         end

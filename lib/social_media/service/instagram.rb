@@ -1,7 +1,7 @@
 module SocialMedia::Service
-  class Linkedin < Base
+  class Instagram < Base
     def self.name
-      :linkedin
+      :instagram
     end
 
     def delete_message message_id

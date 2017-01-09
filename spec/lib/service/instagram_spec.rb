@@ -1,9 +1,9 @@
 require 'spec_helper'
 
-RSpec.describe SocialMedia::Service::Linkedin do
+RSpec.describe SocialMedia::Service::Instagram do
   context "class methods" do
     subject { described_class }
-    its(:name) { is_expected.to eq :linkedin }
+    its(:name) { is_expected.to eq :instagram }
   end
 
   if service_configured? described_class.name
@@ -11,7 +11,7 @@ RSpec.describe SocialMedia::Service::Linkedin do
     subject { service }
 
     it "instantiates" do
-      expect(subject).to be_a SocialMedia::Service::Linkedin
+      expect(subject).to be_a SocialMedia::Service::Instagram
     end
     its(:connection_params) { is_expected.to include :app_key }
     its(:connection_params) { is_expected.to include :app_secret }
@@ -22,7 +22,7 @@ RSpec.describe SocialMedia::Service::Linkedin do
       subject { service }
 
       it "wraps the LinkedIn specific error" do
-        with_cassette :linkedin, :invalid_token do
+        with_cassette :instagram, :invalid_token do
           expect{subject.send_message("This is a test")}.to raise_error SocialMedia::Error, "TODO: fix"
         end
       end
@@ -30,7 +30,7 @@ RSpec.describe SocialMedia::Service::Linkedin do
 
     describe "sending a text message" do
       it "can send a message" do
-        with_cassette :linkedin, :send_text do
+        with_cassette :instagram, :send_text do
           expect(subject.send_message("This is a test")).to eq 'fixme'
         end
       end
@@ -38,14 +38,14 @@ RSpec.describe SocialMedia::Service::Linkedin do
 
     describe "sending a message with images" do
       it "can send a message with one image" do
-        with_cassette :linkedin, :send_image do
+        with_cassette :instagram, :send_image do
           expect(subject.send_message("Testing image upload", filename: chrome_image_path)).to eq 'fixme'
         end
       end
 
       it "can send a message with multiple images" do
         filenames = [chrome_image_path, firefox_image_path, ie_image_path]
-        with_cassette :linkedin, :send_images do
+        with_cassette :instagram, :send_images do
           expect(subject.send_message("Testing multiple image uploads", filenames: filenames)).to eq 'fixme'
         end
       end
@@ -53,7 +53,7 @@ RSpec.describe SocialMedia::Service::Linkedin do
 
     describe "deleting a message" do
       it "can delete a message" do
-        with_cassette :linkedin, :delete_test do
+        with_cassette :instagram, :delete_test do
           expect(subject.delete_message('fixme')).to eq 'fixme'
         end
       end
@@ -61,19 +61,19 @@ RSpec.describe SocialMedia::Service::Linkedin do
 
     describe "Profile" do
       it "can upload a profile cover image" do
-        with_cassette :linkedin, :upload_profile_cover do
+        with_cassette :instagram, :upload_profile_cover do
           expect(subject.upload_profile_cover wallpaper_image_path).to eq true
         end
       end
 
       it "can remove a profile cover image" do
-        with_cassette :linkedin, :remove_profile_cover do
+        with_cassette :instagram, :remove_profile_cover do
           expect(subject.remove_profile_cover).to eq true
         end
       end
 
       it "can upload a profile avatar image" do
-        with_cassette :linkedin, :upload_profile_avatar do
+        with_cassette :instagram, :upload_profile_avatar do
           expect(subject.upload_profile_avatar chrome_image_path).to eq 'fixme'
         end
       end

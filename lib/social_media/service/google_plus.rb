@@ -1,7 +1,7 @@
 module SocialMedia::Service
-  class Linkedin < Base
+  class GooglePlus < Base
     def self.name
-      :linkedin
+      :google_plus
     end
 
     def delete_message message_id
