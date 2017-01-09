@@ -87,54 +87,66 @@ So far, the following have been implemented:
 
 The following are planned:
 
-  Social Media Services:
-    * Yahoo
-    * Facebook
-    * Apple
-    * Yelp
-    * WhitePages
-    * Local.com
-    * Foursquare
-    
-  Directories:
-    * Google
-    * Bing
-    * MapQuest
-    * Superpages
-    * CitySearch
-    * MerchantCircle
-    * eLocal
-    * Topic
-    * YellowPageCity
-    * LocalStack
-    * ShowMeLocal
-    * EZLocal
-    * WhereTo?
-    * YellowMoxie
-    * CitySquares
-    * LocalDatabase
-    * Yellowise
+### Social Media Services:
+  * Yahoo
+  * Facebook
+  * Apple
+  * Yelp
+  * WhitePages
+  * Local.com
+  * Foursquare
 
-## Statistics
+### Directories:
+  * Google
+  * Bing
+  * MapQuest
+  * Superpages
+  * CitySearch
+  * MerchantCircle
+  * eLocal
+  * Topic
+  * YellowPageCity
+  * LocalStack
+  * ShowMeLocal
+  * EZLocal
+  * WhereTo?
+  * YellowMoxie
+  * CitySquares
+  * LocalDatabase
+  * Yellowise
 
-  Facebook: 1,712,000,000 users
-  WhatsApp 1,000,000,000 users
-  Facebook Messenger: 1,000,000,000 users
-  QQ: 899,000,000 users
-  WeChat: 806,000,000 users
-  QZone: 652,000,000 users
-  Tumblr: 555,000,000 users
-  Instagram: 500,000,000 users
-  Twitter: 313,000,000 users
-  Baidu Tieba: 300,000,000 users
-  Skype: 300,000,000 users
-  Sina Weibo: 282,000,000 users
-  Viber: 249,000,000 users
-  Line: 218,000,000 users
-  Snapchat: 200,000,000 users
+### Statistics
+
+  * Facebook: 1,712,000,000 users
+  * WhatsApp 1,000,000,000 users
+  * Facebook Messenger: 1,000,000,000 users
+  * QQ: 899,000,000 users
+  * WeChat: 806,000,000 users
+  * QZone: 652,000,000 users
+  * Tumblr: 555,000,000 users
+  * Instagram: 500,000,000 users
+  * Twitter: 313,000,000 users
+  * Baidu Tieba: 300,000,000 users
+  * Skype: 300,000,000 users
+  * Sina Weibo: 282,000,000 users
+  * Viber: 249,000,000 users
+  * Line: 218,000,000 users
+  * Snapchat: 200,000,000 users
 
 ## Contributing
-Contribution directions go here.
+
+This is an open source project.  If you don't see a service implemented that you need, then fork the project, implement, and
+submit your pull request.  Make sure your PR is accompanied by specs, but *don't commit account credentials* to the repo!
+That also means you should never check in your VCR cassettes.  If someone else wants to test a service, they should set up
+their own accounts and generate their own VCR cassettes.
+
+Testing is done by setting up a spec/config/services.yml which has the keyname that matches the new service's name.
+
+You'll need to add a new:
+  * lib/service/new_service.rb
+  * spec/lib/service/new_service_spec.rb
+  * connection credentials to spec/config/services.yml
+  * any gem dependencies for the new service if you use an API/SDK library.
 
 ## License
 The gem is available as open source under the terms of the [MIT License](http://opensource.org/licenses/MIT).
