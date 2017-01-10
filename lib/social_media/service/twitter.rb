@@ -31,7 +31,7 @@ module SocialMedia::Service
     private
 
     def cast_error error
-      return ::SocialMedia::Error::Unauthorized if error.is_a? ::Twitter::Error::Unauthorized
+      return Error::Unauthorized if error.is_a? ::Twitter::Error::Unauthorized
     end
 
     def client
@@ -63,10 +63,8 @@ module SocialMedia::Service
     end
 
     def send_text_message message, options
-      handle_error do
-        result = client.update(message, options)
-        result.id
-      end
+      result = client.update(message, options)
+      result.id
     end
 
     def send_multipart_message message, options

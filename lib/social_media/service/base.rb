@@ -1,6 +1,8 @@
 module SocialMedia
   module Service
     class Base
+      Error = SocialMedia::Error
+
       def self.name
         raise NotImplementedError.new "#{self.to_s}::name not implemented"
       end
@@ -8,10 +10,12 @@ module SocialMedia
       # :filenames - array of filenames that can be loaded and sent with text message
       # :filename - a single filename that can be loaded and sent with text message
       def send_message message, options={}
-        if options.has_key?(:filenames) || options.has_key?(:filename)
-          send_multipart_message message, options
-        else
-          send_text_message(message, options)
+        handle_error do
+          if options.has_key?(:filenames) || options.has_key?(:filename)
+            send_multipart_message message, options
+          else
+            send_text_message(message, options)
+          end
         end
       end
 
@@ -32,6 +36,11 @@ module SocialMedia
 
         method_name = caller.first.scan(/\:in \`(.*)\'$/).join
         raise SocialMedia::Error::NotProvided.new "#{self.class.to_s}##{method_name}"
+      end
+
+      def raise_not_implemented_error
+        method_name = caller.first.scan(/\:in \`(.*)\'$/).join
+        raise SocialMedia::Error::NotImplemented.new "#{self.class.to_s}##{method_name}"
       end
 
       def handle_error &block

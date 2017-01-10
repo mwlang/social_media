@@ -13,9 +13,15 @@ module SocialMedia
     attr_accessor :wrapped_exception
   end
 
+  # Invalid credentials, expired tokens, etc.
   Unauthorized = Class.new(Error)
   Error::Unauthorized = Unauthorized
 
+  # Features of service that may be allowed to fail silently
   NotProvided = Class.new(Error)
   Error::NotProvided = NotProvided
+
+  # Features of the service that are not yet implemented (but should be)
+  NotImplemented = Class.new(Error)
+  Error::NotImplemented = NotImplemented
 end
