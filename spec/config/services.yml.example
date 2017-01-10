@@ -5,6 +5,11 @@ twitter:
   access_token_secret:  'YOUR_ACCESS_TOKEN_SECRET'
 
 facebook:
-  app_key:        'YOUR_APP_KEY'
-  app_secret:     'YOUR_APP_SECRET'
+  app_id:               'YOUR_APP_ID'
+  app_secret:           'YOUR_APP_SECRET'
+  user_access_token:    'YOUR_ACCESS_TOKEN'
+
+linkedin:
+  client_id:      'YOUR_CLIENT_ID'
+  client_secret:  'YOUR_CLIENT_SECRET'
   access_token:   'YOUR_ACCESS_TOKEN'
