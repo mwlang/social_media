@@ -2,7 +2,11 @@ require 'spec_helper'
 
 RSpec.describe SocialMedia::Service::Facebook do
   include_context "shared_image_fixtures"
-  let(:page_name) { "test_page" }
+  # The page with that name should be created prior to run these specs
+  # Otherwise, it will try to create a page.
+  # However, it requires Standard API Access to Marketing API to create a page.
+  # More information: https://developers.facebook.com/docs/marketing-api/access
+  let(:page_name) { "Test_page" } # Page name should be capitalized
 
   context "class methods" do
     subject { described_class }
@@ -123,23 +127,20 @@ RSpec.describe SocialMedia::Service::Facebook do
         its(:connection_params) { is_expected.to include :page_name }
 
         it "can upload a profile cover image" do
-          pending "implement creating pages and uploading page cover image"
           with_cassette :facebook, :upload_profile_cover do
-            expect{subject.upload_profile_cover chrome_image_path}.to_not raise_error
+            expect{subject.upload_profile_cover wallpaper_image_path}.to_not raise_error
           end
         end
 
         it "can remove a profile cover image" do
-          pending "implement creating pages and uploading page cover image"
           with_cassette :facebook, :remove_profile_cover do
             expect{subject.remove_profile_cover}.to_not raise_error
           end
         end
 
         it "can upload a profile avatar image" do
-          pending "implement creating pages and uploading account/page image"
           with_cassette :facebook, :upload_profile_avatar do
-            expect{subject.upload_profile_avatar chrome_image_path}.to_not raise_error
+            expect{subject.upload_profile_avatar tux_image_path}.to_not raise_error
           end
         end
 
