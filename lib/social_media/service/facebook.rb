@@ -54,11 +54,16 @@ module SocialMedia::Service
 
     # AFAIK, profile avatars only provided on pages, not users
     def remove_profile_avatar
+      # Warning: it removes all Page's profile pictures
+      # The Marketing API should be enabled for the APP to use this feature
+      # A publish_pages permission is required.
       raise_not_provided_error unless switch_to_page
       # The above guard stays in place...implement the TODO logic below.
 
-      raise_not_implemented_error
-      #TODO: implement removing the page's avatar image (aka image/logo/icon)
+      profile_pictures = page_client.get_connections('me', 'photos', type: 'profile')
+      page_client.batch do |batch|
+        profile_pictures.each { |picture| batch.delete_object(picture['id']) }
+      end
     end
 
     # Currently, user_access_token *must* be provided...

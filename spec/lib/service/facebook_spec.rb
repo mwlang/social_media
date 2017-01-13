@@ -145,7 +145,6 @@ RSpec.describe SocialMedia::Service::Facebook do
         end
 
         it "can remove a profile avatar image" do
-          pending "implement creating pages and uploading account/page image"
           with_cassette :facebook, :remove_profile_avatar do
             expect{subject.remove_profile_avatar}.to_not raise_error
           end
