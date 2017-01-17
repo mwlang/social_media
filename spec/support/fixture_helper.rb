@@ -20,6 +20,7 @@ RSpec.shared_context "shared_image_fixtures" do
   let(:opera_image_path)      { image_fixture_path(:ie, :png) }
   let(:netscape_image_path)   { image_fixture_path(:netscape, :png) }
   let(:wallpaper_image_path)  { image_fixture_path(:wallpaper, :jpg) }
+  let(:tux_image_path)        { image_fixture_path(:tux, :png) }
 
   let(:chrome_image)          { image_fixture(:chrome, :png) }
   let(:firefox_image)         { image_fixture(:firefox, :png) }

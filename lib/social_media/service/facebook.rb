@@ -9,6 +9,8 @@ module SocialMedia::Service
   require 'koala'
 
   class Facebook < Base
+    class PageNotFoundError < Error; end
+
     def self.name
       :facebook
     end
@@ -22,38 +24,46 @@ module SocialMedia::Service
 
     # AFAIK, profile covers only provided on pages, not users
     def upload_profile_cover filename
+      # The Marketing API should be enabled for the APP to use this feature
       raise_not_provided_error unless switch_to_page
-      # The above guard stays in place...implement the TODO logic below.
 
-      raise_not_implemented_error
-      #TODO: implement setting a page's profile cover
+      media_info = page_client.put_picture(filename)
+      page_client.put_connections("me", "/", { cover: media_info['id'] })
     end
 
     # AFAIK, profile covers only provided on pages, not users
     def remove_profile_cover
+      # The Marketing API should be enabled for the APP to use this feature
       raise_not_provided_error unless switch_to_page
-      # The above guard stays in place...implement the TODO logic below.
 
-      raise_not_implemented_error
-      #TODO: implement deleting a page's profile cover
+      page = page_client.get_object('me', fields: 'cover')
+      cover = page['cover']
+      page_client.delete_object(cover['cover_id']) if cover
     end
 
     # AFAIK, profile avatars only provided on pages, not users
     def upload_profile_avatar filename
+      # The Marketing API should be enabled for the APP to use this feature
+      # A publish_pages permission is required.
       raise_not_provided_error unless switch_to_page
-      # The above guard stays in place...implement the TODO logic below.
 
-      raise_not_implemented_error
-      #TODO: implement adding the page's avatar image (aka image/logo/icon)
+      media_info = page_client.put_picture filename
+      picture_url = page_client.get_picture_data(media_info['id'])['data']['url']
+      page_client.put_connections('me', 'picture', { picture: picture_url })
     end
 
     # AFAIK, profile avatars only provided on pages, not users
     def remove_profile_avatar
+      # Warning: it removes all Page's profile pictures
+      # The Marketing API should be enabled for the APP to use this feature
+      # A publish_pages permission is required.
       raise_not_provided_error unless switch_to_page
       # The above guard stays in place...implement the TODO logic below.
 
-      raise_not_implemented_error
-      #TODO: implement removing the page's avatar image (aka image/logo/icon)
+      profile_pictures = page_client.get_connections('me', 'photos', type: 'profile')
+      page_client.batch do |batch|
+        profile_pictures.each { |picture| batch.delete_object(picture['id']) }
+      end
     end
 
     # Currently, user_access_token *must* be provided...
@@ -96,10 +106,40 @@ module SocialMedia::Service
       return unless connection_params.has_key?(:page_name) || connection_params.has_key?(:page_id)
       # The above guard stays in place...implement the TODO logic below.
 
-      raise_not_implemented_error
-      #TODO: find the page by name when page_name is present
-      #TODO: otherwise find the page by page_id
-      #TODO: if page_name is given and it doesn't exist, create it
+      page_name = connection_params[:page_name]
+      page_id = connection_params[:page_id]
+
+      accounts = client.get_connections('me', 'accounts')
+
+      # Find the page by name when page_name is present
+      page_account = accounts.find { |account| account['name'] == page_name } if page_name
+
+      # Otherwise find the page by page_id
+      page_account ||= accounts.find { |account| account['id'] == page_id } if page_id
+
+      # If page_name is given and it doesn't exist, create it
+      page_account ||= create_page(page_name) if page_name
+
+      unless page_account
+        raise PageNotFoundError.new("The page is not found and cannot be created")
+      end
+
+      connection_params[:page_access_token] = page_account['access_token']
+    end
+
+    def create_page(page_name)
+      # Please note:
+      # Only applications with Standard API Access to Marketing API can create Pages
+      # Also, ads_management, manage_pages, publish_pages, and business_management
+      # permissions are required.
+      # More info:
+      # https://developers.facebook.com/docs/marketing-api/access
+      # https://developers.facebook.com/docs/graph-api/reference/page/
+      #
+      # Unfortunately, currently it's imposible to create a page via the FB API without
+      # the Marketing API's Standard API Access.
+
+      client.put_connections("me", "accounts", {name: page_name})
     end
 
     def initialize_client
@@ -110,6 +150,10 @@ module SocialMedia::Service
 
     def client
       @client ||= initialize_client
+    end
+
+    def page_client
+      @page_client ||= Koala::Facebook::API.new connection_params[:page_access_token]
     end
 
     def send_text_message message, options = {}
