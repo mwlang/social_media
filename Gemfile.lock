@@ -2,6 +2,7 @@ PATH
   remote: .
   specs:
     social_media (0.0.3)
+      faraday
       google-api-client (~> 0.9)
       koala (~> 2.4)
       twitter (~> 6.0.0)
